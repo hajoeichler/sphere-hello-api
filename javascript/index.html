@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Javascript Hello on SPHERE.IO</title>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <!--script type="text/javascript" src="hello.js"></script-->
+    <script type="text/javascript" src="config.js"></script>
+  </head>
+  <body>
+    <script type="text/javascript">
+      $(document).ready(function(){
+        //var oa = new OAuth({
+        //  client_id: 'S6AD07quPeeTfRoOHXdTx2NZ', // Your application client id
+        //  client_secret: '7d3xSWTN5jQJNpnRnMLd4qICmfahGPka', // Your application client secret
+        //  project_key: 'nicola'
+        //})
+        //oa.start()
+
+        $.ajax({
+          uri: 'https://api.sphere.io' + "/" + Config.project_key + "/product-projections",
+          method: 'GET',
+          headers: {
+            'Authorization': 'Bearer ' + Config.access_token
+          },
+          timeout: 20000
+        }).done(function(data, textStatus, jqXHR){
+          //var json_body = JSON.parse(body)
+          console.log(data)
+          console.log(textStatus)
+          console.log(jqXHR)
+        })
+      })
+    </script>
+  </body>
+</html>
