@@ -6,13 +6,13 @@ module.exports = (grunt)->
 
     coffee:
       default:
-        src: "hello.coffee"
-        dest: "hello.js"
+        src: "src/hello.coffee"
+        dest: "src/hello.js"
 
     # watching for changes
     watch:
       default:
-        files: ["*.coffee"]
+        files: ["src/*.coffee"]
         tasks: ["coffee"]
 
     connect:
