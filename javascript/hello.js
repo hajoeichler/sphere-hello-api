@@ -1,42 +1,59 @@
-(function($, window){
-  var OAuth = (function(){
-    function OAuth(options){
-      this._options = $.extend({
-        client_id: 'client_id', // Your application client id
-        client_secret: 'client_secret', // Your application client secret
-        project_key: 'project_key' // Your project key
-      }, options)
-    }
-
-    OAuth.prototype.start = function(){
-      console.log("Requesting an Access Token...")
-      var params = {
-        'grant_type': 'client_credentials',
-        'scope': 'manage_project:' + this._options.project_key
+(function() {
+  (function($, window) {
+    var Hello, document;
+    document = window.document;
+    Hello = (function() {
+      function Hello(options) {
+        this._options = options;
       }
 
-      var payload = $.param(params)
-      // Currently not possible because of Cross Domain restriction
-      $.ajax({
-        url: 'https://' + this._options.client_id + ':' + this._options.client_secret + '@' + 'auth.sphere.io/oauth/token',
-        type: 'POST',
-        data: payload,
-        xhrFields: {
-          withCredentials: true
-        },
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        timeout: 20000
-      }).done(function(data, textStatus, jqXHR){
-        //var json_body = JSON.parse(body)
-        console.log(data)
-        console.log(textStatus)
-        console.log(jqXHR)
-      })
-    }
+      Hello.prototype.connect = function(callback) {
+        var params, payload,
+          _this = this;
+        params = {
+          grant_type: "client_credentials",
+          scope: "manage_project:" + this._options.project_key
+        };
+        payload = $.param(params);
+        return $.ajax({
+          url: "https://" + this._options.client_id + ":" + this._options.client_secret + "@auth.sphere.io/oauth/token",
+          contentType: "application/x-www-form-urlencoded",
+          type: "POST",
+          data: payload,
+          success: function(data, textStatus, jqXHR) {
+            var json_body;
+            json_body = JSON.parse(data);
+            return callback(void 0, json_body);
+          },
+          error: function(xhr, textStatus) {
+            return callback(xhr, void 0);
+          }
+        });
+      };
 
-    return OAuth
-  })()
-  return window.OAuth = OAuth
-})(jQuery, window)
+      Hello.prototype.getProducts = function(callback) {
+        var _this = this;
+        return $.ajax({
+          url: "https://auth.sphere.io/" + this._options.project_key + "/product-projections",
+          type: "GET",
+          headers: {
+            "Authorization": "Bearer " + this._options.access_token
+          },
+          success: function(data, textStatus, jqXHR) {
+            var json_body;
+            json_body = JSON.parse(data);
+            return callback(void 0, json_body);
+          },
+          error: function(xhr, textStatus) {
+            return callback(xhr, void 0);
+          }
+        });
+      };
+
+      return Hello;
+
+    })();
+    return window.Hello = Hello;
+  })(jQuery, window);
+
+}).call(this);
