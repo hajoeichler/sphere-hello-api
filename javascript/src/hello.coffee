@@ -3,23 +3,8 @@
 
   class Hello
     constructor: (options) ->
+      # we assume to have already an `access_token`
       @_options = options
-
-    connect: (callback) ->
-      params =
-        grant_type: "client_credentials"
-        scope: "manage_project:#{@_options.project_key}"
-
-      payload = $.param(params)
-      $.ajax
-        url: "https://#{@_options.client_id}:#{@_options.client_secret}@auth.sphere.io/oauth/token"
-        contentType: "application/x-www-form-urlencoded"
-        type: "POST"
-        data: payload
-        success: (data, textStatus, jqXHR) =>
-          json_body = JSON.parse(data)
-          callback(undefined, json_body)
-        error: (xhr, textStatus) => callback(xhr, undefined)
 
     getProducts: (callback) ->
       $.ajax
@@ -28,8 +13,7 @@
         headers:
           "Authorization": "Bearer #{@_options.access_token}"
         success: (data, textStatus, jqXHR) =>
-          json_body = JSON.parse(data)
-          callback(undefined, json_body)
+          callback(undefined, data)
         error: (xhr, textStatus) => callback(xhr, undefined)
 
   window.Hello = Hello
