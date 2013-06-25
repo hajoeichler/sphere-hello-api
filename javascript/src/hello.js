@@ -34,7 +34,7 @@
       Hello.prototype.getProducts = function(callback) {
         var _this = this;
         return $.ajax({
-          url: "https://auth.sphere.io/" + this._options.project_key + "/product-projections",
+          url: "https://api.sphere.io/" + this._options.project_key + "/product-projections",
           type: "GET",
           headers: {
             "Authorization": "Bearer " + this._options.access_token

@@ -23,7 +23,7 @@
 
     getProducts: (callback) ->
       $.ajax
-        url: "https://auth.sphere.io/#{@_options.project_key}/product-projections"
+        url: "https://api.sphere.io/#{@_options.project_key}/product-projections"
         type: "GET"
         headers:
           "Authorization": "Bearer #{@_options.access_token}"
