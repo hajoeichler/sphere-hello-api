@@ -71,5 +71,5 @@ fi
 
 login
 
-echo "var config = { project_key: '${PROJECT_KEY}', access_token: '${ACCESS_TOKEN}' }" >config.js
+echo "var config = { project_key: '${PROJECT_KEY}', access_token: '${ACCESS_TOKEN}' }" >../config.js
 echo "{ project_key: '${PROJECT_KEY}', access_token: '${ACCESS_TOKEN}' }"
